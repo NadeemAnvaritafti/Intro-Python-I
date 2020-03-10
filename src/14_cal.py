@@ -30,3 +30,27 @@ it should use today’s date to get the month and year.
 import sys
 import calendar
 from datetime import datetime
+
+date_list = sys.argv
+current_date = datetime.now()
+
+
+def error_message():
+    print(
+        'Command line must follow the following format: [workfile] [month] [year]; example: workfile.py 11 2014')
+
+
+if len(date_list) == 1:
+    date_list.append(current_date.month)
+    date_list.append(current_date.year)
+    print(calendar.month(int(date_list[2]), int(date_list[1])))
+elif len(date_list) == 2 and len(date_list[1]) == 4:
+    date_list.append(current_date.month)
+    print(calendar.month(int(date_list[1]), int(date_list[2])))
+elif len(date_list) == 2 and (len(date_list[1]) == 1 or len(date_list[1]) == 2):
+    date_list.append(current_date.year)
+    print(calendar.month(int(date_list[2]), int(date_list[1])))
+elif len(date_list) == 3:
+    print(calendar.month(int(date_list[2]), int(date_list[1])))
+else:
+    error_message()
