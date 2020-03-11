@@ -33,6 +33,9 @@ from datetime import datetime
 
 date_list = sys.argv
 current_date = datetime.now()
+current_month = datetime.now().month
+current_year = datetime.now().year
+cal = calendar.TextCalendar()
 
 
 def error_message():
@@ -41,16 +44,22 @@ def error_message():
 
 
 if len(date_list) == 1:
-    date_list.append(current_date.month)
-    date_list.append(current_date.year)
-    print(calendar.month(int(date_list[2]), int(date_list[1])))
-elif len(date_list) == 2 and len(date_list[1]) == 4:
-    date_list.append(current_date.month)
-    print(calendar.month(int(date_list[1]), int(date_list[2])))
-elif len(date_list) == 2 and (len(date_list[1]) == 1 or len(date_list[1]) == 2):
-    date_list.append(current_date.year)
-    print(calendar.month(int(date_list[2]), int(date_list[1])))
+    pass
+elif len(date_list) == 2:
+    current_month = int(date_list[1])
+# elif len(date_list) == 2 and (len(date_list[1]) == 1 or len(date_list[1]) == 2):
+#     date_list.append(current_date.year)
+#     print(calendar.month(int(date_list[2]), int(date_list[1])))
 elif len(date_list) == 3:
-    print(calendar.month(int(date_list[2]), int(date_list[1])))
+    current_month = int(date_list[1])
+    current_year = int(date_list[2])
 else:
     error_message()
+    exit()
+
+if current_month < 1 or current_month > 12:
+    print('Invalid Month')
+    error_message()
+    exit()
+
+cal.prmonth(current_year, current_month)
